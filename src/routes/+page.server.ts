@@ -1,8 +1,8 @@
 import {redirect, type Actions, error}  from "@sveltejs/kit";
 import {prisma} from "$lib/server/prisma";
-import { fail } from "assert";
+// import { fail } from "assert";
 import type { PageServerLoad } from "./$types";
-
+import { fail } from "@sveltejs/kit";
 export const load:PageServerLoad = async ({locals}) => {
     const {session, user} = await locals.auth.validateUser();
     if (!session || !user){
@@ -32,7 +32,7 @@ export const actions: Actions = {
                 }
             )
         }catch(err){
-            fail("Unable to create the Article Please try again later.")
+            fail(404,{msg: "Unable to create the Article Please try again later."})   
         }
         return {status: 201}
     },
